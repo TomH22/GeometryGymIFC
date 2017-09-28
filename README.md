@@ -19,3 +19,7 @@ https://github.com/BuildingSMART/IfcScript
 Please contact me in advance of making significant changes to the core code, as 
 it's possible existing code might be ported to the open source repository if I've
 already implemented it.
+
+# Plus on this fork
+- Visual Studio 2008 project
+- some .NET 3.5 adaptations
