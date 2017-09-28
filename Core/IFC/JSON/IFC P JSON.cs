@@ -162,7 +162,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcPipeFittingTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcPipeFittingTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{
@@ -243,13 +243,13 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("LayerOn", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mLayerOn);
+				ggEnum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mLayerOn);
 			token = obj.GetValue("LayerFrozen", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mLayerFrozen);
+				ggEnum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mLayerFrozen);
 			token = obj.GetValue("LayerBlocked", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mLayerBlocked);
+				ggEnum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mLayerBlocked);
 			mDatabase.extractJArray<IfcPresentationStyle>(obj.GetValue("LayerStyles", StringComparison.InvariantCultureIgnoreCase) as JArray).ForEach(x=>addLayerStyle(x));
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
@@ -387,7 +387,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("ProfileType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcProfileTypeEnum>(token.Value<string>(), true, out mProfileType);
+				ggEnum.TryParse<IfcProfileTypeEnum>(token.Value<string>(), true, out mProfileType);
 			token = obj.GetValue("ProfileName", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				ProfileName = token.Value<string>();
@@ -543,7 +543,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("TemplateType", StringComparison.InvariantCultureIgnoreCase);
 			if(token != null)
-				Enum.TryParse<IfcPropertySetTemplateTypeEnum>(token.Value<string>(), true, out mTemplateType);
+				ggEnum.TryParse<IfcPropertySetTemplateTypeEnum>(token.Value<string>(), true, out mTemplateType);
 			token = obj.GetValue("ApplicableEntity", StringComparison.InvariantCultureIgnoreCase);
 			if(token != null)
 				ApplicableEntity = token.Value<string>();
@@ -588,7 +588,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcPumpTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcPumpTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{

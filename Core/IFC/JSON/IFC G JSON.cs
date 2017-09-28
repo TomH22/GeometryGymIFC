@@ -129,7 +129,7 @@ namespace GeometryGym.Ifc
 				TargetScale = token.Value<double>();
 			token = obj.GetValue("TargetView", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcGeometricProjectionEnum>(token.Value<string>(), out mTargetView);
+				ggEnum.TryParse<IfcGeometricProjectionEnum>(token.Value<string>(), true, out mTargetView);
 			token = obj.GetValue("UserDefinedTargetView", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				UserDefinedTargetView = token.Value<string>();

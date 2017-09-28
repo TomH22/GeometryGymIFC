@@ -39,7 +39,7 @@ namespace GeometryGym.Ifc
 				Dimensions = mDatabase.parseJObject<IfcDimensionalExponents>(jobj);
 			JToken token = obj.GetValue("UnitType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcUnitEnum>(token.Value<string>(), out mUnitType);
+                ggEnum.TryParse<IfcUnitEnum>(token.Value<string>(), true, out mUnitType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host,  HashSet<int> processed)
 		{

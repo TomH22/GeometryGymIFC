@@ -88,7 +88,7 @@ namespace GeometryGym.Ifc
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{
 			base.setJSON(obj, host, processed);
-			obj["CoordList"] = string.Join(" ", mCoordList.ToList().ConvertAll(x => x.Item1 + " " + x.Item2));
+			obj["CoordList"] = " " + mCoordList.ToList().ConvertAll(x => x.Item1 + " " + x.Item2);
 		}
 	}
 	public partial class IfcCartesianPointList3D : IfcCartesianPointList //IFC4
@@ -110,7 +110,7 @@ namespace GeometryGym.Ifc
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{
 			base.setJSON(obj, host, processed);
-			obj["CoordList"] = string.Join(" ", mCoordList.ToList().ConvertAll(x => x.Item1 + " " + x.Item2 + " " + x.Item3));
+			obj["CoordList"] = " " + mCoordList.ToList().ConvertAll(x => x.Item1 + " " + x.Item2 + " " + x.Item3);
 		}
 	}
 	public abstract partial class IfcCartesianTransformationOperator : IfcGeometricRepresentationItem /*ABSTRACT SUPERTYPE OF (ONEOF (IfcCartesianTransformationOperator2D ,IfcCartesianTransformationOperator3D))*/
@@ -223,7 +223,7 @@ namespace GeometryGym.Ifc
 				Description = token.Value<string>();
 			token = obj.GetValue("ConstraintGrade", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcConstraintEnum>(token.Value<string>(), out mConstraintGrade);
+                ggEnum.TryParse<IfcConstraintEnum>(token.Value<string>(), true, out mConstraintGrade);
 			token = obj.GetValue("ConstraintSource", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				ConstraintSource = token.Value<string>();

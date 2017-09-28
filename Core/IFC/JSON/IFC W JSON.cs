@@ -36,7 +36,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcWallTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcWallTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host,  HashSet<int> processed)
 		{

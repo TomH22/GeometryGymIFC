@@ -45,7 +45,7 @@ namespace GeometryGym.Ifc
 			{
 				string s = ParserSTEP.StripField(str, ref pos, len);
 				if (s[0] == '.')
-					Enum.TryParse< IfcWallTypeEnum >(s.Substring(1, s.Length - 2), out mPredefinedType);
+					ggEnum.TryParse< IfcWallTypeEnum >(s.Substring(1, s.Length - 2), true, out mPredefinedType);
 			}
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + (mDatabase.mRelease == ReleaseVersion.IFC2x3 ? "" : (mPredefinedType == IfcWallTypeEnum.NOTDEFINED ? ",$" : ",." + mPredefinedType.ToString() + ".")); }

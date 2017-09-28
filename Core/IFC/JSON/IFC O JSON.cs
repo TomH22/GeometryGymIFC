@@ -125,10 +125,10 @@ namespace GeometryGym.Ifc
 			mDatabase.extractJArray<IfcConstraint>(obj.GetValue("BenchmarkValues", StringComparison.InvariantCultureIgnoreCase) as JArray).ForEach(x=>AddBenchmark(x));
 			JToken token = obj.GetValue("LogicalAggregator", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcLogicalOperatorEnum>(token.Value<string>(), true, out mLogicalAggregator);
+				ggEnum.TryParse<IfcLogicalOperatorEnum>(token.Value<string>(), true, out mLogicalAggregator);
 			token = obj.GetValue("ObjectiveQualifier", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcObjectiveEnum>(token.Value<string>(), true, out mObjectiveQualifier);
+				ggEnum.TryParse<IfcObjectiveEnum>(token.Value<string>(), true, out mObjectiveQualifier);
 			UserDefinedQualifier = extractString(obj.GetValue("UserDefinedQualifier", StringComparison.InvariantCultureIgnoreCase));
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
@@ -159,7 +159,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcOpeningElementTypeEnum>(token.Value<string>(), out mPredefinedType);
+                ggEnum.TryParse<IfcOpeningElementTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 			foreach (IfcRelFillsElement fills in mDatabase.extractJArray<IfcRelFillsElement>(obj.GetValue("HasFillings", StringComparison.InvariantCultureIgnoreCase) as JArray))
 				fills.RelatingOpeningElement = this;
 		}

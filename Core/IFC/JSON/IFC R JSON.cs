@@ -105,7 +105,7 @@ namespace GeometryGym.Ifc
 			JToken token = obj.GetValue("RelatedObjectsType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 			{
-				if (!Enum.TryParse<IfcObjectTypeEnum>(token.Value<string>(), true,out mRelatedObjectsType))
+				if (!ggEnum.TryParse<IfcObjectTypeEnum>(token.Value<string>(), true,out mRelatedObjectsType))
 					mRelatedObjectsType = IfcObjectTypeEnum.NOTDEFINED;
 			}
 		}

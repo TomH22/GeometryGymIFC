@@ -17,14 +17,14 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Concurrent;
+//using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace GeometryGym.STEP
 {
@@ -37,9 +37,10 @@ namespace GeometryGym.STEP
 		public int Index { get { return mIndex; } }
 		public List<string> Comments { get { return mComments; } set { mComments = value; } }
 
-		protected static  ConcurrentDictionary<string, Type> mTypes = new ConcurrentDictionary<string, Type>();
-		protected static ConcurrentDictionary<string, MethodInfo> mConstructorsSchema = new ConcurrentDictionary<string, MethodInfo>();
-		protected static ConcurrentDictionary<string, MethodInfo> mConstructorsNoSchema = new ConcurrentDictionary<string, MethodInfo>();
+        // was ConcurrentDictionary, doesn't exists in .NET 3.5
+		protected static  Dictionary<string, Type> mTypes = new Dictionary<string, Type>();
+		protected static Dictionary<string, MethodInfo> mConstructorsSchema = new Dictionary<string, MethodInfo>();
+		protected static Dictionary<string, MethodInfo> mConstructorsNoSchema = new Dictionary<string, MethodInfo>();
 
 		internal STEPEntity() { }
 		internal STEPEntity(int record, string kw, string line) { mIndex = record; mSTEPString = line; }

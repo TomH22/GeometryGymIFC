@@ -49,7 +49,7 @@ namespace GeometryGym.Ifc
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcRailingTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcRailingTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + ",." + mPredefinedType.ToString() + "."; }
 	}
@@ -80,7 +80,7 @@ namespace GeometryGym.Ifc
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcRampTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcRampTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + ",." + mPredefinedType.ToString() + "."; }
 	}
@@ -101,7 +101,7 @@ namespace GeometryGym.Ifc
 			{
 				string s = ParserSTEP.StripField(str, ref pos, len);
 				if (s[0] == '.')
-					Enum.TryParse<IfcRampFlightTypeEnum>(s.Substring(1, s.Length - 2), out mPredefinedType);
+                    ggEnum.TryParse<IfcRampFlightTypeEnum>(s.Substring(1, s.Length - 2), true, out mPredefinedType);
 			}
 		}
 		protected override string BuildStringSTEP() { return (mDatabase.mRelease == ReleaseVersion.IFC2x3 ? base.BuildStringSTEP() : base.BuildStringSTEP() + ",." + mPredefinedType.ToString() + "."); }
@@ -1296,7 +1296,7 @@ namespace GeometryGym.Ifc
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcRoofTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcRoofTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + ",." + mPredefinedType.ToString() + "."; }
 	}

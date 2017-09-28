@@ -60,7 +60,7 @@ namespace GeometryGym.Ifc
 			if (xml.HasAttribute("Description"))
 				Description = xml.Attributes["Description"].Value;
 			if (xml.HasAttribute("ProductDefinitional"))
-				Enum.TryParse<IfcLogicalEnum>(xml.Attributes["ProductDefinitional"].Value, true, out mProductDefinitional);
+				ggEnum.TryParse<IfcLogicalEnum>(xml.Attributes["ProductDefinitional"].Value, true, out mProductDefinitional);
 
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
@@ -111,7 +111,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("TemplateType"))
-				Enum.TryParse<IfcSimplePropertyTemplateTypeEnum>(xml.Attributes["TemplateType"].Value, true, out mTemplateType);
+				ggEnum.TryParse<IfcSimplePropertyTemplateTypeEnum>(xml.Attributes["TemplateType"].Value, true, out mTemplateType);
 			PrimaryMeasureType = extractString(xml, "PrimaryMeasureType");
 			SecondaryMeasureType = extractString(xml, "SecondaryMeasureType");
 			foreach (XmlNode child in xml.ChildNodes)
@@ -126,7 +126,7 @@ namespace GeometryGym.Ifc
 			}
 			Expression = extractString(xml, "Expression");
 			if (xml.HasAttribute("AccessState"))
-				Enum.TryParse<IfcStateEnum>(xml.Attributes["AccessState"].Value, true, out mAccessState);
+				ggEnum.TryParse<IfcStateEnum>(xml.Attributes["AccessState"].Value, true, out mAccessState);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -198,9 +198,9 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("Prefix"))
-				Enum.TryParse<IfcSIPrefix>(xml.Attributes["Prefix"].Value, true, out mPrefix);
+				ggEnum.TryParse<IfcSIPrefix>(xml.Attributes["Prefix"].Value, true, out mPrefix);
 			if (xml.HasAttribute("Name"))
-				Enum.TryParse<IfcSIUnitName>(xml.Attributes["Name"].Value, true, out mName);
+				ggEnum.TryParse<IfcSIUnitName>(xml.Attributes["Name"].Value, true, out mName);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -216,7 +216,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcSlabTypeEnum>(xml.Attributes["PredefinedType"].Value, out mPredefinedType);
+                ggEnum.TryParse<IfcSlabTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -231,9 +231,9 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcSpaceTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcSpaceTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 			else if (xml.HasAttribute("InteriorOrExteriorSpace"))
-				Enum.TryParse<IfcSpaceTypeEnum>(xml.Attributes["InteriorOrExteriorSpace"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcSpaceTypeEnum>(xml.Attributes["InteriorOrExteriorSpace"].Value, true, out mPredefinedType);
 			if (xml.HasAttribute("ElevationWithFlooring"))
 				ElevationWithFlooring = double.Parse(xml.Attributes["ElevationWithFlooring"].Value);
 		}
@@ -305,7 +305,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("CompositionType"))
-				Enum.TryParse<IfcElementCompositionEnum>(xml.Attributes["CompositionType"].Value, true, out mCompositionType);
+				ggEnum.TryParse<IfcElementCompositionEnum>(xml.Attributes["CompositionType"].Value, true, out mCompositionType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -334,7 +334,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("DestabilizingLoad"))
-				Enum.TryParse<IfcLogicalEnum>(xml.Attributes["DestabilizingLoad"].Value, true, out mDestabilizingLoad);
+				ggEnum.TryParse<IfcLogicalEnum>(xml.Attributes["DestabilizingLoad"].Value, true, out mDestabilizingLoad);
 			foreach (XmlNode child in xml.ChildNodes)
 			{
 				string name = child.Name;
@@ -362,7 +362,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("GlobalOrLocal"))
-				Enum.TryParse<IfcGlobalOrLocalEnum>(xml.Attributes["GlobalOrLocal"].Value, true, out mGlobalOrLocal);
+				ggEnum.TryParse<IfcGlobalOrLocalEnum>(xml.Attributes["GlobalOrLocal"].Value, true, out mGlobalOrLocal);
 			foreach (XmlNode child in xml.ChildNodes)
 			{
 				string name = child.Name;
@@ -387,7 +387,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcAnalysisModelTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcAnalysisModelTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 			foreach (XmlNode child in xml.ChildNodes)
 			{
 				string name = child.Name;
@@ -480,9 +480,9 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("ProjectedOrTrue"))
-				Enum.TryParse<IfcProjectedOrTrueLengthEnum>(xml.Attributes["ProjectedOrTrue"].Value, true, out mProjectedOrTrue);
+				ggEnum.TryParse<IfcProjectedOrTrueLengthEnum>(xml.Attributes["ProjectedOrTrue"].Value, true, out mProjectedOrTrue);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcStructuralCurveActivityTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcStructuralCurveActivityTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -498,7 +498,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcStructuralCurveMemberTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcStructuralCurveMemberTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 
 			foreach (XmlNode child in xml.ChildNodes)
 			{
@@ -522,7 +522,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcStructuralCurveActivityTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcStructuralCurveActivityTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -691,7 +691,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("Side"))
-				Enum.TryParse<IfcSurfaceSide>(xml.Attributes["Side"].Value, true, out mSide);
+				ggEnum.TryParse<IfcSurfaceSide>(xml.Attributes["Side"].Value, true, out mSide);
 			foreach (XmlNode child in xml.ChildNodes)
 			{
 				string name = child.Name;

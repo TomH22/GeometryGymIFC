@@ -103,7 +103,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcElementAssemblyTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcElementAssemblyTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{
@@ -190,7 +190,7 @@ namespace GeometryGym.Ifc
 			setAttribute(obj, "Location", Location);
 			setAttribute(obj, "Identification", Identification);
 			setAttribute(obj, "Name", Name);
-			createArray(obj, "HasExternalReferences", HasExternalReferences, this, processed);
+            createArray(obj, "HasExternalReferences", HasExternalReferences, this, processed);
 			createArray(obj, "HasConstraintRelationships", HasConstraintRelationships, this, processed);
 			createArray(obj, "ExternalReferenceForResources", ExternalReferenceForResources, this, processed);
 		}

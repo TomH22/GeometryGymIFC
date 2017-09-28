@@ -86,20 +86,20 @@ namespace GeometryGym.Ifc
 			{
 				type = Type.GetType("GeometryGym.Ifc." + keyword, false, true);
 				if (type != null)
-					mTypes.TryAdd(keyword, type);
+					mTypes.Add(keyword, type);
 			}
 			if (type != null)
 			{
 				parser = type.GetMethod("Parse", BindingFlags.Static | BindingFlags.NonPublic, null, CallingConventions.Any, argSet1, null);
 				if (parser != null)
 				{
-					mConstructorsSchema.TryAdd(keyword, parser);
+					mConstructorsSchema.Add(keyword, parser);
 					return parser.Invoke(null, new object[] { str, schema }) as BaseClassIfc;
 				}
 				parser = type.GetMethod("Parse", BindingFlags.Static | BindingFlags.NonPublic, null, CallingConventions.Any, argSet2, null);
 				if (parser != null)
 				{
-					mConstructorsNoSchema.TryAdd(keyword, parser);
+					mConstructorsNoSchema.Add(keyword, parser);
 					return parser.Invoke(null, new object[] { str }) as BaseClassIfc;
 				}
 			}

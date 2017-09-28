@@ -982,7 +982,7 @@ namespace GeometryGym.Ifc
 			IfcElement.parseFields(e, arrFields, ref ipos);
 			string str = arrFields[ipos++];
 			if (str != "$")
-				Enum.TryParse<IfcTransportElementTypeEnum>(str.Substring(1, str.Length - 2), out e.mPredefinedType);
+                ggEnum.TryParse<IfcTransportElementTypeEnum>(str.Substring(1, str.Length - 2), true, out e.mPredefinedType);
 			if(schema == ReleaseVersion.IFC2x3)
 			{
 				e.mCapacityByWeight = ParserSTEP.ParseDouble(arrFields[ipos++]);

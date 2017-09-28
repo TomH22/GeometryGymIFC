@@ -59,7 +59,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("UnitType"))
-				Enum.TryParse<IfcDerivedUnitEnum>(xml.Attributes["UnitType"].Value, true, out mUnitType);
+				ggEnum.TryParse<IfcDerivedUnitEnum>(xml.Attributes["UnitType"].Value, true, out mUnitType);
 			if (xml.HasAttribute("UserDefinedType"))
 				UserDefinedType = xml.Attributes["UserDefinedType"].Value;
 			foreach (XmlNode child in xml.ChildNodes)
@@ -153,11 +153,11 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("FlowDirection"))
-				Enum.TryParse<IfcFlowDirectionEnum>(xml.Attributes["FlowDirection"].Value, true, out mFlowDirection);
+				ggEnum.TryParse<IfcFlowDirectionEnum>(xml.Attributes["FlowDirection"].Value, true, out mFlowDirection);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcDistributionPortTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcDistributionPortTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 			if (xml.HasAttribute("SystemType"))
-				Enum.TryParse<IfcDistributionSystemEnum>(xml.Attributes["SystemType"].Value, true, out mSystemType);
+				ggEnum.TryParse<IfcDistributionSystemEnum>(xml.Attributes["SystemType"].Value, true, out mSystemType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -198,7 +198,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcDoorTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
+				ggEnum.TryParse<IfcDoorTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -213,7 +213,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcDoorTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
+				ggEnum.TryParse<IfcDoorTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{

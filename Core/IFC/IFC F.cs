@@ -707,7 +707,7 @@ namespace GeometryGym.Ifc
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcFootingTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcFootingTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + ",." + mPredefinedType.ToString() + "."; }
 	}

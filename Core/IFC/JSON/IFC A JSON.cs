@@ -35,7 +35,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType",StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcAirTerminalTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcAirTerminalTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host,  HashSet<int> processed)
 		{
@@ -51,7 +51,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase); 
 			if (token != null)
-				Enum.TryParse<IfcAirTerminalTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcAirTerminalTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host,  HashSet<int> processed)
 		{
@@ -144,7 +144,7 @@ namespace GeometryGym.Ifc
 				Condition = token.Value<string>();
 			token = obj.GetValue("ArithmeticOperator", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcArithmeticOperatorEnum>(token.Value<string>(),out mArithmeticOperator);
+                ggEnum.TryParse<IfcArithmeticOperatorEnum>(token.Value<string>(), true, out mArithmeticOperator);
 
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host,  HashSet<int> processed)

@@ -300,7 +300,7 @@ namespace GeometryGym.Ifc
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcShadingDeviceTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcShadingDeviceTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + (mDatabase.mRelease == ReleaseVersion.IFC2x3 ? "" : (mPredefinedType == IfcShadingDeviceTypeEnum.NOTDEFINED ? ",$" : ",." + mPredefinedType.ToString() + ".")); }
 	}
@@ -721,7 +721,7 @@ additional types	some additional representation types are given:
 		internal static void parseFields(IfcSimplePropertyTemplate s, List<string> arrFields, ref int ipos)
 		{
 			IfcPropertyTemplate.parseFields(s, arrFields, ref ipos);
-			if (!Enum.TryParse<IfcSimplePropertyTemplateTypeEnum>(arrFields[ipos++].Replace(".", ""),true, out s.mTemplateType))
+			if (!ggEnum.TryParse<IfcSimplePropertyTemplateTypeEnum>(arrFields[ipos++].Replace(".", ""),true, out s.mTemplateType))
 				s.mTemplateType = IfcSimplePropertyTemplateTypeEnum.NOTDEFINED;
 			s.mPrimaryMeasureType = arrFields[ipos++].Replace("'", ""); ;
 			s.mSecondaryMeasureType = arrFields[ipos++].Replace("'", ""); ;
@@ -729,7 +729,7 @@ additional types	some additional representation types are given:
 			s.mPrimaryUnit = ParserSTEP.ParseLink(arrFields[ipos++]);
 			s.mSecondaryUnit = ParserSTEP.ParseLink(arrFields[ipos++]);
 			s.mExpression = arrFields[ipos++].Replace("'", "");
-			if (!Enum.TryParse<IfcStateEnum>(arrFields[ipos++].Replace(".", ""), out s.mAccessState))
+            if (!ggEnum.TryParse<IfcStateEnum>(arrFields[ipos++].Replace(".", ""), true, out s.mAccessState))
 				s.mAccessState = IfcStateEnum.NA;
 		}
 		protected override string BuildStringSTEP()
@@ -819,7 +819,7 @@ additional types	some additional representation types are given:
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcSlabTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcSlabTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + (mPredefinedType == IfcSlabTypeEnum.NOTDEFINED ? ",$" : ",." + mPredefinedType.ToString() + "."); }
 	}
@@ -1417,7 +1417,7 @@ additional types	some additional representation types are given:
 			base.Parse(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s.StartsWith("."))
-				Enum.TryParse<IfcStairTypeEnum>(s.Replace(".", ""), out mPredefinedType);
+                ggEnum.TryParse<IfcStairTypeEnum>(s.Replace(".", ""), true, out mPredefinedType);
 		}
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + ",." + mPredefinedType.ToString() + "."; }
 	}
@@ -1447,7 +1447,7 @@ additional types	some additional representation types are given:
 			{
 				string s = ParserSTEP.StripField(str, ref pos, len);
 				if (s[0] == '.')
-					Enum.TryParse<IfcStairFlightTypeEnum>(s.Substring(1, s.Length - 2),out mPredefinedType);
+                    ggEnum.TryParse<IfcStairFlightTypeEnum>(s.Substring(1, s.Length - 2), true, out mPredefinedType);
 			}
 		}
 		protected override string BuildStringSTEP()
@@ -1731,12 +1731,21 @@ additional types	some additional representation types are given:
 		{
 			public IfcBoundaryNodeCondition BoundaryCondition { get; set; }
 			public IfcStructuralConnectionCondition StructuralConnectionCondition { get; set; }
-			public double SupportedLength { get; set; } = 0;
-			public Tuple<double, double, double> Eccentricity { get; set; } = null;
-			internal IfcAxis2Placement3D ConditionCoordinateSystem { get; set; } = null;
-			public ExtremityAttributes() { }
+			public double SupportedLength { get; set; }// = 0;
+			public Tuple<double, double, double> Eccentricity { get; set; }
+			internal IfcAxis2Placement3D ConditionCoordinateSystem { get; set; }// = null;
+			public ExtremityAttributes() 
+            { 
+                SupportedLength = 0;
+                Eccentricity = null;
+                ConditionCoordinateSystem = null;
+            }
 			public ExtremityAttributes(ExtremityAttributes atts)
 			{
+                SupportedLength = 0;
+                Eccentricity = null;
+                ConditionCoordinateSystem = null;
+
 				if(atts != null)
 				{
 					BoundaryCondition = atts.BoundaryCondition;
@@ -2520,7 +2529,11 @@ additional types	some additional representation types are given:
 		internal new static IfcStyledRepresentation Parse(string strDef) { IfcStyledRepresentation r = new IfcStyledRepresentation(); int pos = 0; r.parseString(strDef, ref pos, strDef.Length); return r; }
 
 		internal void addItem(IfcStyledItem item) { base.addItem(item); }
-		internal void setItems(IEnumerable<IfcStyledItem> items) { base.setItems(items); }
+		internal void setItems(IEnumerable<IfcStyledItem> items) {
+
+            mItems.Clear(); foreach (IfcRepresentationItem item in items) addItem(item);
+            //base.setItems(items); 
+        }
 
 	}
 	public abstract partial class IfcStyleModel : IfcRepresentation  //ABSTRACT SUPERTYPE OF(IfcStyledRepresentation)
@@ -2994,7 +3007,7 @@ additional types	some additional representation types are given:
 			if (mDatabase.mRelease == ReleaseVersion.IFC2x3)
 			{
 				IfcSurfaceTextureEnum texture = IfcSurfaceTextureEnum.NOTDEFINED;
-				if (!Enum.TryParse<IfcSurfaceTextureEnum>(mMode,true, out texture))
+				if (!ggEnum.TryParse<IfcSurfaceTextureEnum>(mMode,true, out texture))
 					texture = IfcSurfaceTextureEnum.NOTDEFINED;
 				result += ",." + texture.ToString() + ".,"+ ParserSTEP.LinkToString(mTextureTransform);
 			}

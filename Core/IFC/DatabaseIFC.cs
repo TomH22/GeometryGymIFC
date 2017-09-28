@@ -26,8 +26,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
+//using System.Threading.Tasks;
+//using System.Collections.Concurrent;
 using GeometryGym.STEP;
 
 namespace GeometryGym.Ifc
@@ -37,11 +37,17 @@ namespace GeometryGym.Ifc
 
 	public class Triple<T>
 	{
-		public T X { get; set; } = default(T);
-		public T Y { get; set; } = default(T);
-		public T Z { get; set; } = default(T);
+		public T X { get; set; }// = default(T);
+		public T Y { get; set; }// = default(T);
+		public T Z { get; set; }// = default(T);
 
-		public Triple() { }
+		public Triple() 
+        {
+            X = default(T);
+            Y = default(T);
+            Z = default(T);
+        }
+
 		public Triple(T x, T y, T z)
 		{
 			X = x;
@@ -58,7 +64,11 @@ namespace GeometryGym.Ifc
 		private FactoryIfc mFactory = null;
 		public FactoryIfc Factory { get { return mFactory; } }
 
-		public DatabaseIfc() : base() { mFactory = new FactoryIfc(this); }
+		public DatabaseIfc() : base() 
+        {
+            XMLMandatoryId = false;
+            mFactory = new FactoryIfc(this); 
+        }
 		public DatabaseIfc(string fileName) : this() { ReadFile(fileName); }
 		public DatabaseIfc(TextReader stream) : this() { ReadFile(stream, 0); }
 		public DatabaseIfc(ModelView view) : this(true, view) { }
@@ -92,7 +102,7 @@ namespace GeometryGym.Ifc
 		internal ModelView mModelView = ModelView.If2x3NotAssigned;
 		internal bool mAccuratePreview = false;
 		internal string mFileName = "";
-		public string FolderPath { get; private set; } = "";
+		public string FolderPath { get; private set; }// = "";
 		public string FileName { get { return mFileName; } set { mFileName = value; FolderPath = Path.GetDirectoryName(value); } }
 		internal bool mTimeInDays = false;
 		public ReleaseVersion Release
@@ -190,21 +200,21 @@ namespace GeometryGym.Ifc
 			string ext = Path.GetExtension(fileName);
 			FileName = fileName;
 			FolderPath = Path.GetDirectoryName(fileName);
-#if (!NOIFCZIP)
-			if (fileName.ToLower().EndsWith("zip"))
-			{
-				System.IO.Compression.ZipArchive za = System.IO.Compression.ZipFile.OpenRead(fileName);
-				if (za.Entries.Count != 1)
-				{
-					return null;
-				}
-				string filename = za.Entries[0].Name.ToLower();
-				FormatIfc fformat = detectFormat(filename);
-				StreamReader str = (fformat == FormatIfc.STEP ? new StreamReader(za.Entries[0].Open(), Encoding.GetEncoding("windows-1252")) :
-					new StreamReader(za.Entries[0].Open()));
-				return new FileStreamIfc(fformat,str);
-			}
-#endif
+//#if (!NOIFCZIP)
+//            if (fileName.ToLower().EndsWith("zip"))
+//            {
+//                System.IO.Compression.ZipArchive za = System.IO.Compression.ZipFile.OpenRead(fileName);
+//                if (za.Entries.Count != 1)
+//                {
+//                    return null;
+//                }
+//                string filename = za.Entries[0].Name.ToLower();
+//                FormatIfc fformat = detectFormat(filename);
+//                StreamReader str = (fformat == FormatIfc.STEP ? new StreamReader(za.Entries[0].Open(), Encoding.GetEncoding("windows-1252")) :
+//                    new StreamReader(za.Entries[0].Open()));
+//                return new FileStreamIfc(fformat,str);
+//            }
+//#endif
 			FormatIfc format = detectFormat(fileName);
 			StreamReader sr = format == FormatIfc.STEP ? new StreamReader(fileName, Encoding.GetEncoding("windows-1252")) :
 				new StreamReader(fileName);
@@ -528,27 +538,27 @@ namespace GeometryGym.Ifc
 				WriteXMLFile(FileName);
 				return true;
 			}
-#if (!NOIFCJSON)
-			else if(FileName.EndsWith("json"))
-			{
-				ToJSON(FileName);
-				return true;
-			}
+//#if (!NOIFCJSON)
+//            else if(FileName.EndsWith("json"))
+//            {
+//                ToJSON(FileName);
+//                return true;
+//            }
 
-#endif
-#if (!NOIFCZIP)
-			bool zip = FileName.EndsWith(".ifczip");
-			System.IO.Compression.ZipArchive za = null;
-			if (zip)
-			{
-				if (System.IO.File.Exists(FileName))
-					System.IO.File.Delete(FileName);
-				za = System.IO.Compression.ZipFile.Open(FileName, System.IO.Compression.ZipArchiveMode.Create);
-				System.IO.Compression.ZipArchiveEntry zae = za.CreateEntry(System.IO.Path.GetFileNameWithoutExtension(FileName) + ".ifc");
-				sw = new StreamWriter(zae.Open());
-			}
-			else
-#endif
+//#endif
+//#if (!NOIFCZIP)
+//            bool zip = FileName.EndsWith(".ifczip");
+//            System.IO.Compression.ZipArchive za = null;
+//            if (zip)
+//            {
+//                if (System.IO.File.Exists(FileName))
+//                    System.IO.File.Delete(FileName);
+//                za = System.IO.Compression.ZipFile.Open(FileName, System.IO.Compression.ZipArchiveMode.Create);
+//                System.IO.Compression.ZipArchiveEntry zae = za.CreateEntry(System.IO.Path.GetFileNameWithoutExtension(FileName) + ".ifc");
+//                sw = new StreamWriter(zae.Open());
+//            }
+//            else
+//#endif
 			sw = new StreamWriter(FileName);
 			CultureInfo current = Thread.CurrentThread.CurrentCulture;
 			Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -569,10 +579,10 @@ namespace GeometryGym.Ifc
 			sw.Write(getFooterString());
 			sw.Close();
 			Thread.CurrentThread.CurrentUICulture = current;
-#if (!NOIFCZIP)
-			if (zip)
-				za.Dispose();
-#endif
+//#if (!NOIFCZIP)
+//            if (zip)
+//                za.Dispose();
+//#endif
 			return true;
 		}
 	}
@@ -584,8 +594,13 @@ namespace GeometryGym.Ifc
 
 		public partial class GenerateOptions
 		{
-			public bool GenerateOwnerHistory { get; set; } = true;
-			public bool AngleUnitsInRadians { get; set; } = true;	
+            public GenerateOptions() {
+                GenerateOwnerHistory = true;
+                AngleUnitsInRadians = true;
+            }
+
+			public bool GenerateOwnerHistory { get; set; }// = true;
+			public bool AngleUnitsInRadians { get; set; }// = true;	
 		}
 		internal GenerateOptions mOptions = new GenerateOptions();
 		public GenerateOptions Options { get { return mOptions; } }
@@ -781,7 +796,7 @@ namespace GeometryGym.Ifc
 			if (!string.IsNullOrEmpty(str))
 			{
 				IfcRoleEnum role = IfcRoleEnum.NOTDEFINED;
-				if (Enum.TryParse<IfcRoleEnum>(str, out role))
+				if (ggEnum.TryParse<IfcRoleEnum>(str, out role))
 				{
 					if (role != IfcRoleEnum.NOTDEFINED)
 						mPerson.AddRole(new IfcActorRole(mDatabase, role, "", "", new List<int>()));

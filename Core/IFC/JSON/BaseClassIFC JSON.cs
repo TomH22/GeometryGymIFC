@@ -66,7 +66,41 @@ namespace GeometryGym.Ifc
 			if (!string.IsNullOrEmpty(value))
 				obj[attribute] = value;
 		}
-		protected void createArray(JObject obj,string name, IEnumerable<IBaseClassIfc> objects, BaseClassIfc host, HashSet<int> processed)
+
+
+        private List<BaseClassIfc> convertChildToParentList(IEnumerable<IfcExternalReferenceRelationship> objects)
+        {
+            List<BaseClassIfc> result = new List<BaseClassIfc>();
+            foreach (IfcExternalReferenceRelationship objectX in objects)
+            {
+                result.Add(objectX as BaseClassIfc);
+            }
+
+            return result;
+        }
+
+        private List<BaseClassIfc> convertChildToParentList2(IEnumerable<IfcResourceConstraintRelationship> objects)
+        {
+            List<BaseClassIfc> result = new List<BaseClassIfc>();
+            foreach (IfcResourceConstraintRelationship objectX in objects)
+            {
+                result.Add(objectX as BaseClassIfc);
+            }
+
+            return result;
+        }
+
+        protected void createArray(JObject obj, string name, IEnumerable<IfcExternalReferenceRelationship> objects, BaseClassIfc host, HashSet<int> processed)
+        {
+            createArray(obj, name, convertChildToParentList(objects), host, processed);
+        }
+
+        protected void createArray(JObject obj, string name, IEnumerable<IfcResourceConstraintRelationship> objects, BaseClassIfc host, HashSet<int> processed)
+		{
+            createArray(obj, name, convertChildToParentList2(objects), host, processed);
+		}
+
+		protected void createArray(JObject obj,string name, IEnumerable<BaseClassIfc> objects, BaseClassIfc host, HashSet<int> processed)
 		{
 			if (objects.Count() == 0)
 				return;

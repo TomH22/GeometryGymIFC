@@ -99,7 +99,7 @@ namespace GeometryGym.Ifc
 			if (xml.HasAttribute("TargetScale"))
 				TargetScale = double.Parse(xml.Attributes["TargetScale"].Value);
 			if (xml.HasAttribute("TargetView"))
-				Enum.TryParse<IfcGeometricProjectionEnum>(xml.Attributes["TargetView"].Value, true, out mTargetView);
+				ggEnum.TryParse<IfcGeometricProjectionEnum>(xml.Attributes["TargetView"].Value, true, out mTargetView);
 			if (xml.HasAttribute("UserDefinedTargetView"))
 				UserDefinedTargetView = xml.Attributes["UserDefinedTargetView"].Value;
 		}

@@ -480,7 +480,7 @@ namespace GeometryGym.Ifc
 			mControlPointsList = ParserSTEP.StripListLink(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
 			if (s[0] == '.')
-				Enum.TryParse<IfcBSplineCurveForm> (s.Replace(".", ""), out mCurveForm);
+                ggEnum.TryParse<IfcBSplineCurveForm>(s.Replace(".", ""), true, out mCurveForm);
 			mClosedCurve = ParserIfc.StripLogical(str, ref pos, len);
 			mSelfIntersect = ParserIfc.StripLogical(str, ref pos, len);
 		}
@@ -594,8 +594,8 @@ namespace GeometryGym.Ifc
 			mVDegree = int.Parse(ParserSTEP.StripField(str, ref pos, len));
 			mControlPointsList = ParserSTEP.StripListListLink(str, ref pos, len);
 			string s = ParserSTEP.StripField(str, ref pos, len);
-			if(s[0] == '.') 
-				Enum.TryParse<IfcBSplineSurfaceForm>(s.Replace(".", ""),out mSurfaceForm);
+			if(s[0] == '.')
+                ggEnum.TryParse<IfcBSplineSurfaceForm>(s.Replace(".", ""), true, out mSurfaceForm);
 			mUClosed = ParserIfc.StripLogical(str,ref pos, len);
 			mVClosed = ParserIfc.StripLogical(str,ref pos, len);
 			mSelfIntersect = ParserIfc.StripLogical(str,ref pos, len);

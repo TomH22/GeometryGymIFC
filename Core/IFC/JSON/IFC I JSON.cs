@@ -62,7 +62,7 @@ namespace GeometryGym.Ifc
 			}
 			JToken token = obj.GetValue("SelfIntersect", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mSelfIntersect);
+				ggEnum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mSelfIntersect);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{
@@ -83,7 +83,8 @@ namespace GeometryGym.Ifc
 					else
 					{
 						IfcLineIndex li = seg as IfcLineIndex;
-						jobj["IfcLineIndex"] = string.Join(" ", li.mIndices.ConvertAll(x => x.ToString()));
+                        //jobj["IfcLineIndex"] = string.Join(" ", li.mIndices.ConvertAll(x => x.ToString()));
+                        jobj["IfcLineIndex"] = " " + li.mIndices.ConvertAll(x => x.ToString());
 					}
 					array.Add(jobj);
 				}

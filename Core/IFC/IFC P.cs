@@ -485,7 +485,7 @@ namespace GeometryGym.Ifc
 			}
 			catch (Exception) { }
 		}
-		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + "," + mWidth + "," + mHeight + "," + mColourComponents + ",(" + string.Join(",", mPixel.ConvertAll(x => "'" + x + "'")) + ")"; }
+		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + "," + mWidth + "," + mHeight + "," + mColourComponents + ",(" + "," + mPixel.ConvertAll(x => "'" + x + "'") + ")"; }
 	}
 	public abstract partial class IfcPlacement : IfcGeometricRepresentationItem /*ABSTRACT SUPERTYPE OF (ONEOF (IfcAxis1Placement ,IfcAxis2Placement2D ,IfcAxis2Placement3D))*/
 	{
@@ -554,7 +554,7 @@ namespace GeometryGym.Ifc
 			{
 				string s = ParserSTEP.StripField(str, ref pos, len);
 				if (s[0] == '.')
-					Enum.TryParse<IfcPlateTypeEnum>(s.Substring(1, s.Length - 2), out mPredefinedType);
+                    ggEnum.TryParse<IfcPlateTypeEnum>(s.Substring(1, s.Length - 2), true, out mPredefinedType);
 			}
 		}
 		protected override string BuildStringSTEP() { return (mDatabase.mRelease == ReleaseVersion.IFC2x3 ? base.BuildStringSTEP() : base.BuildStringSTEP() + (mPredefinedType == IfcPlateTypeEnum.NOTDEFINED ? ",$" : ",." + mPredefinedType.ToString() + ".")); }
@@ -2101,7 +2101,8 @@ namespace GeometryGym.Ifc
 		 Dictionary<string,IfcProperty> mHasProperties = new Dictionary<string, IfcProperty>();// : SET [1:?] OF IfcProperty;
 		private List<int> mPropertyIndices = new List<int>();
 
-		public ReadOnlyDictionary<string,IfcProperty> HasProperties { get { return new ReadOnlyDictionary<string, IfcProperty>( mHasProperties); } }
+        // was ReadOnlyDictionary, doesn't exist in .NET 3.5
+		public Dictionary<string,IfcProperty> HasProperties { get { return new Dictionary<string, IfcProperty>( mHasProperties); } }
 
 		internal override void Initialize()
 		{
@@ -2198,13 +2199,18 @@ namespace GeometryGym.Ifc
 					{
 						string name = r.InstanceName;
 
-						if (!string.IsNullOrEmpty(name))
-						{
-							if (mHasProperties.ContainsKey(name))
-								result.Add(mHasProperties[name]);
-						}
-						else
-							result.AddRange(mHasProperties.Values);
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            if (mHasProperties.ContainsKey(name))
+                                result.Add(mHasProperties[name]);
+                        }
+                        else
+                        {
+                            foreach (IBaseClassIfc value in mHasProperties.Values)
+                                result.Add(value);
+
+                            //result.AddRange(mHasProperties.Values);
+                        }
 					}
 					else
 					{

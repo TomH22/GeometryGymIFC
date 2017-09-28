@@ -1,4 +1,4 @@
-// MIT License
+﻿// MIT License
 // Copyright (c) 2016 Geometry Gym Pty Ltd
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
@@ -18,37 +18,35 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using System.Reflection;
 using System.IO;
 using System.ComponentModel;
-using System.Linq;
-using System.Xml;
-//using System.Xml.Linq;
+using System.Globalization;
 
-
-namespace GeometryGym.Ifc
+namespace GeometryGym
 {
-	public abstract partial class IfcNamedUnit : BaseClassIfc, IfcUnit //ABSTRACT SUPERTYPE OF (ONEOF(IfcContextDependentUnit,IfcConversionBasedUnit,IfcSIUnit));
-	{
-		internal override void ParseXml(XmlElement xml)
-		{
-			base.ParseXml(xml);
-			foreach (XmlNode child in xml.ChildNodes)
-			{
-				string name = child.Name;
-				if (string.Compare(name, "Dimensions") == 0)
-					Dimensions = mDatabase.ParseXml<IfcDimensionalExponents>(child as XmlElement);
-			}
-			if (xml.HasAttribute("UnitType"))
-				ggEnum.TryParse<IfcUnitEnum>(xml.Attributes["UnitType"].Value, true, out mUnitType);
-		}
-		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
-		{
-			base.SetXML(xml, host, processed);
-			if (mDimensions > 0)
-				xml.AppendChild(Dimensions.GetXML(xml.OwnerDocument, "Dimensions", this, processed));
-			xml.SetAttribute("UnitType", mUnitType.ToString().ToLower());
-		}
-	}
+    public class Tuple<T1, T2>
+    {
+        public T1 Item1 { get; private set; }
+        public T2 Item2 { get; private set; }
+        public Tuple(T1 item1, T2 item2)
+        {
+            Item1 = item1;
+            Item2 = item2;
+        }
+    }
+    public class Tuple<T1, T2, T3>
+    {
+        public T1 Item1 { get; private set; }
+        public T2 Item2 { get; private set; }
+        public T3 Item3 { get; private set; }
+        public Tuple(T1 item1, T2 item2, T3 item3)
+        {
+            Item1 = item1;
+            Item2 = item2;
+            Item3 = item3;
+        }
+    }
 }

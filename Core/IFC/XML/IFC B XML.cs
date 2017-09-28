@@ -35,7 +35,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcBeamTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
+				ggEnum.TryParse<IfcBeamTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -50,7 +50,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcBeamTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
+				ggEnum.TryParse<IfcBeamTypeEnum>(xml.Attributes["PredefinedType"].Value,true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -85,7 +85,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("Operator"))
-				Enum.TryParse<IfcBooleanOperator>(xml.Attributes["Operator"].Value, true, out mOperator);
+				ggEnum.TryParse<IfcBooleanOperator>(xml.Attributes["Operator"].Value, true, out mOperator);
 			foreach (XmlNode child in xml.ChildNodes)
 			{
 				string name = child.Name;
@@ -163,9 +163,9 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcBuildingElementProxyTypeEnum>(xml.Attributes["PredefinedType"].Value, out mPredefinedType);
+                ggEnum.TryParse<IfcBuildingElementProxyTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 			else if (xml.HasAttribute("CompositionType"))
-				Enum.TryParse<IfcBuildingElementProxyTypeEnum>(xml.Attributes["CompositionType"].Value, out mPredefinedType);
+                ggEnum.TryParse<IfcBuildingElementProxyTypeEnum>(xml.Attributes["CompositionType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -188,7 +188,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcBuildingElementProxyTypeEnum>(xml.Attributes["PredefinedType"].Value, out mPredefinedType);
+                ggEnum.TryParse<IfcBuildingElementProxyTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{

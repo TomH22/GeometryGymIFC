@@ -36,7 +36,7 @@ namespace GeometryGym.Ifc
 			Elements = mDatabase.extractJArray<IfcDerivedUnitElement>(obj.GetValue("Elements", StringComparison.InvariantCultureIgnoreCase) as JArray);
 			JToken token = obj.GetValue("UnitType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDerivedUnitEnum>(token.Value<string>(), true, out mUnitType);
+				ggEnum.TryParse<IfcDerivedUnitEnum>(token.Value<string>(), true, out mUnitType);
 			token = obj.GetValue("UserDefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				UserDefinedType = token.Value<string>();
@@ -171,13 +171,13 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("FlowDirection", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcFlowDirectionEnum>(token.Value<string>(), true, out mFlowDirection);
+				ggEnum.TryParse<IfcFlowDirectionEnum>(token.Value<string>(), true, out mFlowDirection);
 			token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDistributionPortTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcDistributionPortTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 			token = obj.GetValue("SystemType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDistributionSystemEnum>(token.Value<string>(), true, out mSystemType);
+				ggEnum.TryParse<IfcDistributionSystemEnum>(token.Value<string>(), true, out mSystemType);
 		}
 		protected override void setJSON(JObject obj, BaseClassIfc host, HashSet<int> processed)
 		{
@@ -220,13 +220,13 @@ namespace GeometryGym.Ifc
 				mPanelDepth = token.Value<double>();
 			token = obj.GetValue("OperationType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDoorPanelOperationEnum>(token.Value<string>(), true, out mOperationType);
+				ggEnum.TryParse<IfcDoorPanelOperationEnum>(token.Value<string>(), true, out mOperationType);
 			token = obj.GetValue("PanelWidth", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				mPanelWidth = token.Value<double>();
 			token = obj.GetValue("PanelPosition", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDoorPanelPositionEnum>(token.Value<string>(), true, out mPanelPosition);
+				ggEnum.TryParse<IfcDoorPanelPositionEnum>(token.Value<string>(), true, out mPanelPosition);
 			JObject jobj = obj.GetValue("ShapeAspectStyle", StringComparison.InvariantCultureIgnoreCase) as JObject;
 			if (jobj != null)
 				ShapeAspectStyle = mDatabase.parseJObject<IfcShapeAspect>(jobj);
@@ -251,10 +251,10 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("PredefinedType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDoorTypeEnum>(token.Value<string>(), true, out mPredefinedType);
+				ggEnum.TryParse<IfcDoorTypeEnum>(token.Value<string>(), true, out mPredefinedType);
 			token = obj.GetValue("OperationType", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcDoorTypeOperationEnum>(token.Value<string>(), true, out mOperationType);
+				ggEnum.TryParse<IfcDoorTypeOperationEnum>(token.Value<string>(), true, out mOperationType);
 			token = obj.GetValue("ParameterTakesPrecedence", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				mParameterTakesPrecedence = token.Value<bool>();

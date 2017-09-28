@@ -1701,7 +1701,7 @@ namespace GeometryGym.Ifc
 			{
 				foreach(IfcRelDeclares rd in Declares)
 				{
-					IReadOnlyCollection<IfcDefinitionSelect> ds = rd.RelatedDefinitions;
+					ReadOnlyCollection<IfcDefinitionSelect> ds = rd.RelatedDefinitions;
 					foreach(IfcDefinitionSelect d in ds)
 					{
 						if (d is T && !result.Contains((T)d))

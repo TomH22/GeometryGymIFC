@@ -102,7 +102,7 @@ namespace GeometryGym.Ifc
 				LayerThickness = token.Value<double>();
 			token = obj.GetValue("IsVentilated", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcLogicalEnum>(token.Value<string>(), out mIsVentilated);
+                ggEnum.TryParse<IfcLogicalEnum>(token.Value<string>(), true, out mIsVentilated);
 			token = obj.GetValue("Name", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				Name = token.Value<string>();
@@ -179,7 +179,7 @@ namespace GeometryGym.Ifc
 			base.parseJObject(obj);
 			JToken token = obj.GetValue("BenchMark", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
-				Enum.TryParse<IfcBenchmarkEnum>(token.Value<string>(), out mBenchMark);
+                ggEnum.TryParse<IfcBenchmarkEnum>(token.Value<string>(), true, out mBenchMark);
 			token = obj.GetValue("ValueSource", StringComparison.InvariantCultureIgnoreCase);
 			if (token != null)
 				ValueSource = token.Value<string>();

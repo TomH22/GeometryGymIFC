@@ -141,7 +141,7 @@ namespace GeometryGym.Ifc
 			if (xml.HasAttribute("LayerThickness"))
 				LayerThickness = double.Parse(xml.Attributes["LayerThickness"].Value);
 			if (xml.HasAttribute("IsVentilated"))
-				Enum.TryParse<IfcLogicalEnum>(xml.Attributes["IsVentilated"].Value, true, out mIsVentilated);
+				ggEnum.TryParse<IfcLogicalEnum>(xml.Attributes["IsVentilated"].Value, true, out mIsVentilated);
 			if (xml.HasAttribute("Name"))
 				Name = xml.Attributes["Name"].Value;
 			if (xml.HasAttribute("Description"))
@@ -215,9 +215,9 @@ namespace GeometryGym.Ifc
 					ForLayerSet = mDatabase.ParseXml<IfcMaterialLayerSet>(child as XmlElement);
 			}
 			if (xml.HasAttribute("LayerSetDirection"))
-				Enum.TryParse<IfcLayerSetDirectionEnum>(xml.Attributes["LayerSetDirection"].Value, true, out mLayerSetDirection);
+				ggEnum.TryParse<IfcLayerSetDirectionEnum>(xml.Attributes["LayerSetDirection"].Value, true, out mLayerSetDirection);
 			if (xml.HasAttribute("DirectionSense"))
-				Enum.TryParse<IfcDirectionSenseEnum>(xml.Attributes["DirectionSense"].Value, true, out mDirectionSense);
+				ggEnum.TryParse<IfcDirectionSenseEnum>(xml.Attributes["DirectionSense"].Value, true, out mDirectionSense);
 			if (xml.HasAttribute("OffsetFromReferenceLine"))
 				mOffsetFromReferenceLine = double.Parse(xml.Attributes["OffsetFromReferenceLine"].Value);
 			if (xml.HasAttribute("ReferenceExtent"))
@@ -297,7 +297,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("BenchMark"))
-				Enum.TryParse<IfcBenchmarkEnum>(xml.Attributes["BenchMark"].Value, true, out mBenchMark);
+				ggEnum.TryParse<IfcBenchmarkEnum>(xml.Attributes["BenchMark"].Value, true, out mBenchMark);
 			if (xml.HasAttribute("ValueSource"))
 				ValueSource = xml.Attributes["ValueSource"].Value;
 			foreach (XmlNode child in xml.ChildNodes)

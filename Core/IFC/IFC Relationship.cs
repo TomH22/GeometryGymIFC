@@ -157,7 +157,7 @@ namespace GeometryGym.Ifc
 		{
 			IfcRelationship.parseFields(c, arrFields, ref ipos);
 			c.mRelatedObjects = ParserSTEP.SplitListLinks(arrFields[ipos++]);
-			if (!Enum.TryParse<IfcObjectTypeEnum>(arrFields[ipos++].Replace(".",""),true, out c.mRelatedObjectsType))
+			if (!ggEnum.TryParse<IfcObjectTypeEnum>(arrFields[ipos++].Replace(".",""),true, out c.mRelatedObjectsType))
 				c.mRelatedObjectsType = IfcObjectTypeEnum.NOTDEFINED;
 		}
 		protected override void Parse(string str, ref int pos, int len)
@@ -165,7 +165,7 @@ namespace GeometryGym.Ifc
 			base.Parse(str, ref pos, len);
 			mRelatedObjects = ParserSTEP.StripListLink(str, ref pos, len);
 			string field = ParserSTEP.StripField(str, ref pos, len);
-			if (!Enum.TryParse<IfcObjectTypeEnum>(field.Replace(".",""),true, out mRelatedObjectsType))
+			if (!ggEnum.TryParse<IfcObjectTypeEnum>(field.Replace(".",""),true, out mRelatedObjectsType))
 				mRelatedObjectsType = IfcObjectTypeEnum.NOTDEFINED;
 		}
 

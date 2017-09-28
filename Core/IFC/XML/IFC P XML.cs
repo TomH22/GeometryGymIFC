@@ -155,7 +155,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcPipeFittingTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcPipeFittingTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
@@ -393,11 +393,11 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("LayerOn"))
-				Enum.TryParse<IfcLogicalEnum>(xml.Attributes["LayerOn"].Value, true, out mLayerOn);
+				ggEnum.TryParse<IfcLogicalEnum>(xml.Attributes["LayerOn"].Value, true, out mLayerOn);
 			if (xml.HasAttribute("LayerFrozen"))
-				Enum.TryParse<IfcLogicalEnum>(xml.Attributes["LayerFrozen"].Value, true, out mLayerFrozen);
+				ggEnum.TryParse<IfcLogicalEnum>(xml.Attributes["LayerFrozen"].Value, true, out mLayerFrozen);
 			if (xml.HasAttribute("LayerBlocked"))
-				Enum.TryParse<IfcLogicalEnum>(xml.Attributes["LayerBlocked"].Value, true, out mLayerBlocked);
+				ggEnum.TryParse<IfcLogicalEnum>(xml.Attributes["LayerBlocked"].Value, true, out mLayerBlocked);
 			foreach (XmlNode child in xml.ChildNodes)
 			{
 				string name = child.Name;
@@ -578,7 +578,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("ProfileType"))
-				Enum.TryParse<IfcProfileTypeEnum>(xml.Attributes["ProfileType"].Value, true, out mProfileType);
+				ggEnum.TryParse<IfcProfileTypeEnum>(xml.Attributes["ProfileType"].Value, true, out mProfileType);
 			if (xml.HasAttribute("ProfileName"))
 				ProfileName = xml.Attributes["ProfileName"].Value;
 		}
@@ -797,7 +797,16 @@ namespace GeometryGym.Ifc
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
 			base.SetXML(xml, host, processed);
-			setChild(xml, "HasProperties", mPropertyIndices.ConvertAll(x=>mDatabase[x]), processed);	
+
+            if (mPropertyIndices.ConvertAll(x => mDatabase[x]) == null || mPropertyIndices.ConvertAll(x => mDatabase[x]).Count() == 0)
+				return;
+			XmlElement element = xml.OwnerDocument.CreateElement("HasProperties");
+			xml.AppendChild(element);
+			foreach (IBaseClassIfc o in  mPropertyIndices.ConvertAll(x=>mDatabase[x]))
+				element.AppendChild(mDatabase[o.Index].GetXML(xml.OwnerDocument, "", this, processed));
+
+
+            //setChild(xml, "HasProperties", mPropertyIndices.ConvertAll(x=>mDatabase[x]), processed);	
 		}
 	}
 	public partial class IfcPropertySetDefinition : IfcPropertyDefinition
@@ -828,7 +837,16 @@ namespace GeometryGym.Ifc
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{
 			base.SetXML(xml, host, processed);
-			setChild(xml, "IsDefinedBy", IsDefinedBy, processed);
+
+
+            if (IsDefinedBy == null || IsDefinedBy.Count() == 0)
+                return;
+            XmlElement element = xml.OwnerDocument.CreateElement("IsDefinedBy");
+            xml.AppendChild(element);
+            foreach (IBaseClassIfc o in IsDefinedBy)
+                element.AppendChild(mDatabase[o.Index].GetXML(xml.OwnerDocument, "", this, processed));
+
+            //setChild(xml, "IsDefinedBy", IsDefinedBy, processed);
 		}
 	}
 	public partial class IfcPropertySetTemplate : IfcPropertyTemplateDefinition
@@ -837,7 +855,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("TemplateType"))
-				Enum.TryParse<IfcPropertySetTemplateTypeEnum>(xml.Attributes["TemplateType"].Value,true, out mTemplateType);
+				ggEnum.TryParse<IfcPropertySetTemplateTypeEnum>(xml.Attributes["TemplateType"].Value,true, out mTemplateType);
 			if (xml.HasAttribute("ApplicableEntity"))
 				ApplicableEntity = xml.Attributes["ApplicableEntity"].Value;
 			foreach (XmlNode child in xml.ChildNodes)
@@ -853,7 +871,16 @@ namespace GeometryGym.Ifc
 			if (mTemplateType != IfcPropertySetTemplateTypeEnum.NOTDEFINED)
 				xml.SetAttribute("TemplateType", mTemplateType.ToString().ToLower());
 			setAttribute(xml,"ApplicableEntity", ApplicableEntity);
-			setChild(xml, "HasPropertyTemplates", HasPropertyTemplates, processed);
+
+            if (HasPropertyTemplates == null || HasPropertyTemplates.Count() == 0)
+                return;
+            XmlElement element = xml.OwnerDocument.CreateElement("HasPropertyTemplates");
+            xml.AppendChild(element);
+            foreach (IBaseClassIfc o in HasPropertyTemplates)
+                element.AppendChild(mDatabase[o.Index].GetXML(xml.OwnerDocument, "", this, processed));
+
+
+            //setChild(xml, "HasPropertyTemplates", HasPropertyTemplates, processed);
 		}
 	}
 	public partial class IfcPropertySingleValue : IfcSimpleProperty
@@ -892,7 +919,7 @@ namespace GeometryGym.Ifc
 		{
 			base.ParseXml(xml);
 			if (xml.HasAttribute("PredefinedType"))
-				Enum.TryParse<IfcPumpTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
+				ggEnum.TryParse<IfcPumpTypeEnum>(xml.Attributes["PredefinedType"].Value, true, out mPredefinedType);
 		}
 		internal override void SetXML(XmlElement xml, BaseClassIfc host, Dictionary<int, XmlElement> processed)
 		{

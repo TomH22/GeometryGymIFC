@@ -152,7 +152,7 @@ namespace GeometryGym.Ifc
 			setAttribute(xml, "AttributeIdentifier", AttributeIdentifier);
 			setAttribute(xml, "InstanceName", InstanceName);
 			if (mListPositions.Count > 0)
-				xml.SetAttribute("ListPositions", String.Join(" ", mListPositions));
+				xml.SetAttribute("ListPositions", " " + mListPositions);
 			if (mInnerReference > 0)
 				xml.AppendChild(InnerReference.GetXML(xml.OwnerDocument, "InnerReference", this, processed));
 		}
@@ -207,7 +207,7 @@ namespace GeometryGym.Ifc
 			}
 			if (xml.HasAttribute("RelatedObjectsType"))
 			{
-				if (!Enum.TryParse<IfcObjectTypeEnum>(xml.Attributes["GlobalId"].Value,true, out mRelatedObjectsType))
+				if (!ggEnum.TryParse<IfcObjectTypeEnum>(xml.Attributes["GlobalId"].Value,true, out mRelatedObjectsType))
 					mRelatedObjectsType = IfcObjectTypeEnum.NOTDEFINED;
 			}
 		}

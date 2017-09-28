@@ -74,11 +74,7 @@ namespace GeometryGym.STEP
 			}
 		}
 		internal void appendObject(T o) { this[NextBlank] = o; }
-		private int mNextBlank
-		{
-			get;
-			set;
-		} = 1;
+		private int mNextBlank = 1;
 		internal int NextBlank
 		{
 			get
@@ -119,7 +115,7 @@ namespace GeometryGym.STEP
 
 		
 
-		internal string PreviousApplication { get; set; } = "";
+		internal string PreviousApplication { get; set; }// = "";
 	}
 }
 
