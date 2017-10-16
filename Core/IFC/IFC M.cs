@@ -692,7 +692,11 @@ namespace GeometryGym.Ifc
 			: base(ps, ip) { mForProfileEndSet = eps.mIndex; mCardinalEndPoint = eip; }
 		internal new static IfcMaterialProfileSetUsageTapering Parse(string strDef) { IfcMaterialProfileSetUsageTapering u = new IfcMaterialProfileSetUsageTapering(); int ipos = 0; parseFields(u, ParserSTEP.SplitLineFields(strDef), ref ipos); return u; }
 		internal static void parseFields(IfcMaterialProfileSetUsageTapering m, List<string> arrFields, ref int ipos) { IfcMaterialProfileSetUsage.parseFields(m, arrFields, ref ipos); m.mForProfileEndSet = ParserSTEP.ParseLink(arrFields[ipos++]); m.mCardinalEndPoint = (IfcCardinalPointReference)ParserSTEP.ParseInt(arrFields[ipos++]); }
-		protected override string BuildStringSTEP() { return (mDatabase.mRelease == ReleaseVersion.IFC2x3 || mAssociatedTo == null || Associates.mRelatedObjects.Count == 0 ? "" : base.BuildStringSTEP() + "," + ParserSTEP.LinkToString(mForProfileEndSet) + "," + (int)mCardinalEndPoint); }
+		protected override string BuildStringSTEP() 
+        { return 
+            (mDatabase.mRelease == ReleaseVersion.IFC2x3 || mAssociatedTo == null || Associates.mRelatedObjects.Count == 0 ? "" : 
+            base.BuildStringSTEP() + "," + ParserSTEP.LinkToString(mForProfileEndSet) + "," + (int)mCardinalEndPoint); 
+        }
 	}
 	public partial class IfcMaterialProfileWithOffsets : IfcMaterialProfile //IFC4
 	{

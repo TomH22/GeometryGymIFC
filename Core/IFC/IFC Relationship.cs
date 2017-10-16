@@ -620,6 +620,7 @@ namespace GeometryGym.Ifc
 				ms.Associates = this;
 		}
 	}
+
 	public partial class IfcRelAssociatesProfileProperties : IfcRelAssociates //IFC4 DELETED Replaced by IfcRelAssociatesMaterial together with material-profile sets
 	{
 		private int mRelatingProfileProperties;// : IfcProfileProperties;

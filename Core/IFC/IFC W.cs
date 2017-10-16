@@ -79,6 +79,13 @@ namespace GeometryGym.Ifc
 			Representation = new IfcProductDefinitionShape(reps);
 		}
 
+        public IfcWallStandardCase(IfcProduct container, IfcMaterialLayerSetUsage layerSetUsage, IfcAxis2Placement3D placement, IfcProductDefinitionShape shape)
+            : base(container, new IfcLocalPlacement(container.Placement, placement), null)
+        {
+            setMaterial(layerSetUsage);
+            Representation = shape;
+        }
+
 		internal new static IfcWallStandardCase Parse(string str, ReleaseVersion schema) { IfcWallStandardCase w = new IfcWallStandardCase(); int pos = 0; w.Parse(str, ref pos, str.Length, schema); return w; }
 	}
 	public partial class IfcWallType : IfcBuildingElementType

@@ -450,7 +450,12 @@ namespace GeometryGym.Ifc
 				rc.RelatingElement = this;
 			}
 		}
-		protected IfcElement(IfcObjectDefinition host, IfcObjectPlacement p, IfcProductRepresentation r) : base(host, p, r) { }
+
+		protected IfcElement(IfcObjectDefinition host, IfcObjectPlacement p, IfcProductRepresentation r) : base(host, p, r) 
+        {
+
+        }
+
 		protected IfcElement(IfcProduct host, IfcMaterialProfileSetUsage profile, IfcAxis2Placement3D placement, double length) : base(host, new IfcLocalPlacement(host.Placement, placement), null)
 		{
 			List<IfcShapeModel> reps = new List<IfcShapeModel>();

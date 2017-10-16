@@ -73,6 +73,7 @@ namespace GeometryGym.Ifc
 			m.mFbsmFaces = ParserSTEP.SplitListLinks(str.Substring(1, str.Length - 2));
 			return m;
 		}
+
 		protected override string BuildStringSTEP()
 		{
 			string str = base.BuildStringSTEP() + ",(" + ParserSTEP.LinkToString(mFbsmFaces[0]);

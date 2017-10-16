@@ -1239,8 +1239,8 @@ namespace GeometryGym.Ifc
 		internal List<int> mCfsFaces = new List<int>();// : SET [1:?] OF IfcFace;
 		public ReadOnlyCollection<IfcFace> CfsFaces { get { return new ReadOnlyCollection<IfcFace>(mCfsFaces.ConvertAll(x => mDatabase[x] as IfcFace)); } }
 
-		internal IfcConnectedFaceSet() : base() { }
-		internal IfcConnectedFaceSet(List<IfcFace> faces) : base(faces[0].mDatabase) { mCfsFaces = faces.ConvertAll(x => x.mIndex); }
+		public IfcConnectedFaceSet() : base() { }
+		public IfcConnectedFaceSet(List<IfcFace> faces) : base(faces[0].mDatabase) { mCfsFaces = faces.ConvertAll(x => x.mIndex); }
 		internal IfcConnectedFaceSet(DatabaseIfc db, IfcConnectedFaceSet c) : base(db,c) { c.CfsFaces.ToList().ForEach(x=>AddFace(db.Factory.Duplicate(x) as IfcFace)); }
 		protected override string BuildStringSTEP()
 		{
