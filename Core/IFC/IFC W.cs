@@ -201,6 +201,12 @@ namespace GeometryGym.Ifc
 		internal IfcWindow(DatabaseIfc db, IfcWindow w, bool downStream) : base(db, w, downStream) { mOverallHeight = w.mOverallHeight; mOverallWidth = w.mOverallWidth; mPredefinedType = w.mPredefinedType; mPartitioningType = w.mPartitioningType; mUserDefinedPartitioningType = w.mUserDefinedPartitioningType; }
 		public IfcWindow(IfcObjectDefinition host, IfcObjectPlacement placement, IfcProductRepresentation representation) : base(host, placement, representation) { }
 
+        public IfcWindow(IfcObjectDefinition host, IfcOpeningElement openingElement, IfcObjectPlacement placement, IfcProductRepresentation representation) : 
+            this(host, placement, representation) 
+        {
+            IfcRelFillsElement relFillsElement = new IfcRelFillsElement(openingElement, this);
+        }
+
 		internal static IfcWindow Parse(string str, ReleaseVersion schema) { IfcWindow w = new IfcWindow(); int pos = 0; w.Parse(str, ref pos, str.Length, schema); return w; }
 		protected void Parse(string str, ref int pos, int len, ReleaseVersion schema)
 		{

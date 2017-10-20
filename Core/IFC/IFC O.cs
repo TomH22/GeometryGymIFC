@@ -482,7 +482,7 @@ namespace GeometryGym.Ifc
 
 		internal IfcOpeningElement() : base() { }
 		internal IfcOpeningElement(DatabaseIfc db, IfcOpeningElement e) : base(db, e) { mPredefinedType = e.mPredefinedType; }
-		internal IfcOpeningElement(DatabaseIfc db) : base(db) { }
+        public IfcOpeningElement(DatabaseIfc db) : base(db) { }
 		public IfcOpeningElement(IfcElement host, IfcObjectPlacement placement, IfcProductRepresentation rep) : base(host.mDatabase)
 		{
 			if (placement == null)
@@ -492,6 +492,7 @@ namespace GeometryGym.Ifc
 			Representation = rep;
 			IfcRelVoidsElement rve = new IfcRelVoidsElement(host, this);
 		}
+
 	
 		internal static IfcOpeningElement Parse(string strDef, ReleaseVersion schema) { IfcOpeningElement e = new IfcOpeningElement(); int ipos = 0; parseFields(e, ParserSTEP.SplitLineFields(strDef), ref ipos); return e; }
 		internal static void parseFields(IfcOpeningElement e, List<string> arrFields, ref int ipos, ReleaseVersion schema)
@@ -585,7 +586,8 @@ namespace GeometryGym.Ifc
 			string name = mName;
 			if(string.IsNullOrEmpty(name))
 				name = mDatabase.Factory.ApplicationDeveloper;
-			string str = base.BuildStringSTEP() + "," + mIdentification + ",'" + name + "'," + mDescription + (mRoles.Count == 0 ? ",$" : ",(#" + mRoles[0]);
+            string str = base.BuildStringSTEP() + "," + ParserIfc.ReplaceAe(mIdentification) + ",'" + ParserIfc.ReplaceAe(name) + "'," +
+                ParserIfc.ReplaceAe(mDescription) + (mRoles.Count == 0 ? ",$" : ",(#" + mRoles[0]);
 
 			for (int icounter = 1; icounter < mRoles.Count; icounter++)
 				str += ",#" + mRoles;

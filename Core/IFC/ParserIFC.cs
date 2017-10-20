@@ -525,6 +525,19 @@ namespace GeometryGym.Ifc
 			return false;
 		}
 
+        internal static String ReplaceAe(String s)
+        {
+            String ss = new String(s.ToCharArray());
+            ss = ss.Replace("Ä", "Ae");
+            ss = ss.Replace("Ö", "Oe");
+            ss = ss.Replace("Ü", "Ue");
+            ss = ss.Replace("ß", "ss");
+            ss = ss.Replace("ä", "ae");
+            ss = ss.Replace("ö", "oe");
+            ss = ss.Replace("ü", "ue");
+
+            return System.Text.Encoding.ASCII.GetString(System.Text.Encoding.ASCII.GetBytes(ss), 0, ss.Length);
+        }
 
 		//http://madskristensen.net/post/A-shorter-and-URL-friendly-GUID.aspx
 		/// <summary>

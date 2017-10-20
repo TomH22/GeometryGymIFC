@@ -149,31 +149,39 @@ namespace GeometryGym.Ifc
 			string hdr = "ISO-10303-21;\r\nHEADER;\r\nFILE_DESCRIPTION(('ViewDefinition [" + viewDefinition + "]'),'2;1');\r\n";
 
 			hdr += "FILE_NAME(\r\n";
-			hdr += "/* name */ '" + ParserIfc.Encode(fileName.Replace("\\", "\\\\")) + "',\r\n";
+            hdr += "/* name */ '" + ParserIfc.ReplaceAe(ParserIfc.Encode(Path.GetFileName(fileName))) + "',\r\n";
 			DateTime now = DateTime.Now;
 			hdr += "/* time_stamp */ '" + now.Year + "-" + (now.Month < 10 ? "0" : "") + now.Month + "-" + (now.Day < 10 ? "0" : "") + now.Day + "T" + (now.Hour < 10 ? "0" : "") + now.Hour + ":" + (now.Minute < 10 ? "0" : "") + now.Minute + ":" + (now.Second < 10 ? "0" : "") + now.Second + "',\r\n";
-			hdr += "/* author */ ('" + System.Environment.UserName + "'),\r\n";
-			hdr += "/* organization */ ('" + IfcOrganization.Organization + "'),\r\n";
+            hdr += "/* author */ ('" + ParserIfc.ReplaceAe(System.Environment.UserName) + "'),\r\n";
+            hdr += "/* organization */ ('" + ParserIfc.ReplaceAe(IfcOrganization.Organization) + "'),\r\n";
 			hdr += "/* preprocessor_version */ '" + mFactory.ToolkitName  + "',\r\n";
-			hdr += "/* originating_system */ '" + mFactory.ApplicationFullName + "',\r\n";
+            hdr += "/* originating_system */ '" + ParserIfc.ReplaceAe(mFactory.ApplicationFullName) + "',\r\n";
 			hdr += "/* authorization */ 'None');\r\n\r\n";
 			hdr += "FILE_SCHEMA (('" + (mRelease == ReleaseVersion.IFC2x3 ? "IFC2X3" : "IFC4") + "'));\r\n";
 			hdr += "ENDSEC;\r\n";
 			hdr += "\r\nDATA;";
 			return hdr;
 		}
+
 		internal string getFooterString() { return "ENDSEC;\r\n\r\nEND-ISO-10303-21;\r\n\r\n"; } 
 		public override string ToString()
 		{
 			string result = getHeaderString("") + "\r\n";
-			foreach(BaseClassIfc e in this)
-			{
-				string str = e.ToString();
-				if (str != "")
-					result += str +"\r\n";
-			}
+            result = GetEntitiesString() + result;
 			return result + getFooterString();
 		}
+
+        public string GetEntitiesString()
+        {
+            string result = "";
+            foreach (BaseClassIfc e in this)
+            {
+                string str = e.ToString();
+                if (str != "")
+                    result += str + "\r\n";
+            }
+            return result;
+        }
 	
 		internal enum FormatIfc { JSON, STEP, XML }
 		internal class FileStreamIfc

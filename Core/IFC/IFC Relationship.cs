@@ -1593,7 +1593,14 @@ namespace GeometryGym.Ifc
 		internal IfcRelFillsElement() : base() { }
 		internal IfcRelFillsElement(DatabaseIfc db, IfcRelFillsElement r) : base(db,r) { RelatingOpeningElement = db.Factory.Duplicate(r) as IfcOpeningElement; RelatedBuildingElement = db.Factory.Duplicate(r.RelatedBuildingElement) as IfcElement; }
 		internal IfcRelFillsElement(IfcOpeningElement oe, IfcElement e) : base(oe.mDatabase) { mRelatingOpeningElement = oe.mIndex; mRelatedBuildingElement = e.mIndex; }
-		internal static IfcRelFillsElement Parse(string strDef) { IfcRelFillsElement i = new IfcRelFillsElement(); int ipos = 0; parseFields(i, ParserSTEP.SplitLineFields(strDef), ref ipos); return i; }
+        /// <remarks>
+        /// don't use, just for special case
+        /// </remarks>
+        internal IfcRelFillsElement(DatabaseIfc db,int oeIndex, IfcElement e) : base(db) {
+            mRelatingOpeningElement = oeIndex; 
+            mRelatedBuildingElement = e.mIndex; 
+        }	
+        internal static IfcRelFillsElement Parse(string strDef) { IfcRelFillsElement i = new IfcRelFillsElement(); int ipos = 0; parseFields(i, ParserSTEP.SplitLineFields(strDef), ref ipos); return i; }
 		internal static void parseFields(IfcRelFillsElement i, List<string> arrFields, ref int ipos) { IfcRelConnects.parseFields(i, arrFields, ref ipos); i.mRelatingOpeningElement = ParserSTEP.ParseLink(arrFields[ipos++]); i.mRelatedBuildingElement = ParserSTEP.ParseLink(arrFields[ipos++]); }
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + "," + ParserSTEP.LinkToString(mRelatingOpeningElement) + "," + ParserSTEP.LinkToString(mRelatedBuildingElement); }
 		internal override void postParseRelate()

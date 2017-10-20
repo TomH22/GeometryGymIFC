@@ -57,6 +57,15 @@ namespace GeometryGym.Ifc
 		}
 
 		internal void addBound(IfcFaceBound bound) { mBounds.Add(bound.mIndex); }
+
+        /// <summary>
+        /// - abbreviation
+        /// </summary>
+        public static IfcFace GenFace(DatabaseIfc db, IfcCartesianPoint v1, IfcCartesianPoint v2, IfcCartesianPoint v3, IfcCartesianPoint v4)
+        {
+            IfcPolyloop polyloop1 = new IfcPolyloop(new List<IfcCartesianPoint> { v1, v2, v3, v4 });
+            return new IfcFace(new IfcFaceOuterBound(polyloop1, true));
+        }
 	}
 	public partial class IfcFaceBasedSurfaceModel : IfcGeometricRepresentationItem, IfcSurfaceOrFaceSurface
 	{

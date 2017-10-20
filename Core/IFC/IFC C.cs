@@ -406,6 +406,7 @@ namespace GeometryGym.Ifc
 		public double Scale3 { get { return mScale3; } set { mScale3 = value; } }
 
 		internal IfcCartesianTransformationOperator3DnonUniform() { }
+        public IfcCartesianTransformationOperator3DnonUniform(DatabaseIfc db) : base(db) {}
 		internal IfcCartesianTransformationOperator3DnonUniform(DatabaseIfc db, IfcCartesianTransformationOperator3DnonUniform o) : base(db,o) { mScale2 = o.mScale2; mScale3 = o.mScale3; }
 		internal new static IfcCartesianTransformationOperator3DnonUniform Parse(string str) { IfcCartesianTransformationOperator3DnonUniform o = new IfcCartesianTransformationOperator3DnonUniform(); int pos = 0; o.Parse(str, ref pos, str.Length); return o; }
 		protected override void Parse(string str, ref int pos, int len)

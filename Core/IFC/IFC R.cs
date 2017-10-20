@@ -1352,6 +1352,15 @@ namespace GeometryGym.Ifc
 			get { return mDatabase[mOwnerHistory] as IfcOwnerHistory; }
 			set { mOwnerHistory = (value == null ? 0 : value.mIndex); }
 		}
+
+        /// <remarks>
+        /// don't use, just for special case
+        /// </remarks>
+        public void SetOwnerHistoryIndex(int index)
+        {
+            mOwnerHistory = index;
+        }
+
 		public override string Name
 		{
 			get { return (mName == "$" ? "" : ParserIfc.Decode(mName)); }

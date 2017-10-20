@@ -455,6 +455,15 @@ namespace GeometryGym.Ifc
 				relativeTo.mReferencedByPlacements.Add(this);
 			}
 		}
+
+        /// <remarks>
+        /// don't use, just for special case
+        /// </remarks>
+        public IfcLocalPlacement(int relativeToIndex, IfcAxis2Placement placement)
+            : this(placement)
+        {
+            mPlacementRelTo = relativeToIndex;
+        }
 		
 		internal static IfcLocalPlacement Parse(string strDef) { IfcLocalPlacement p = new IfcLocalPlacement(); int ipos = 0; parseFields(p, ParserSTEP.SplitLineFields(strDef), ref ipos); return p; }
 		internal static void parseFields(IfcLocalPlacement p, List<string> arrFields, ref int ipos) { IfcObjectPlacement.parseFields(p, arrFields, ref ipos); p.mPlacementRelTo = ParserSTEP.ParseLink(arrFields[ipos++]); p.mRelativePlacement = ParserSTEP.ParseLink(arrFields[ipos++]); }

@@ -34,7 +34,20 @@ namespace GeometryGym.STEP
 		internal List<string> mComments = new List<string>();
 		internal string mSTEPString = "";
 
-		public int Index { get { return mIndex; } }
+		public int Index 
+        { 
+            get 
+            { 
+                return mIndex; 
+            }
+
+            // don't use, just for special case
+            set
+            {
+                mIndex = value;
+            }
+        }
+
 		public List<string> Comments { get { return mComments; } set { mComments = value; } }
 
         // was ConcurrentDictionary, doesn't exists in .NET 3.5

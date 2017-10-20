@@ -755,6 +755,18 @@ namespace GeometryGym.Ifc
             IfcRelFillsElement relFillsElement = new IfcRelFillsElement(openingElement, this);
         }
 
+        /// <remarks>
+        /// don't use, just for special case
+        /// </remarks>
+        public IfcDoor(DatabaseIfc db, int openingElementIndex, IfcObjectPlacement placement, IfcProductRepresentation representation) :
+            base(db)
+        {
+            Placement = placement;
+            Representation = representation;
+
+            IfcRelFillsElement relFillsElement = new IfcRelFillsElement(db, openingElementIndex, this);
+        }
+
         internal static IfcDoor Parse(string str, ReleaseVersion schema) { IfcDoor d = new IfcDoor(); int pos = 0; d.Parse(str, ref pos, str.Length, schema); return d; }
 		
 		protected void Parse(string str, ref int pos, int len, ReleaseVersion schema)
