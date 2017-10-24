@@ -25,8 +25,8 @@ using System.IO;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-
 using GeometryGym.STEP;
+using System.Globalization;
 
 namespace GeometryGym.Ifc
 {
@@ -59,7 +59,7 @@ namespace GeometryGym.Ifc
 				{
 					int i = (int)c;
 					if (i < 32 || i > 126)
-						result += "\\X2\\" + string.Format("{0:x4}", i).ToUpper() + "\\X0\\";
+						result += "\\X2\\" + string.Format("{0:x4}", i, CultureInfo.InvariantCulture).ToUpper() + "\\X0\\";
 					else
 						result += c;
 				}

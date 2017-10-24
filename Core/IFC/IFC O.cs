@@ -493,6 +493,17 @@ namespace GeometryGym.Ifc
 			IfcRelVoidsElement rve = new IfcRelVoidsElement(host, this);
 		}
 
+        /// <remarks>
+        /// don't use, just for special case
+        /// </remarks>
+		public IfcOpeningElement(DatabaseIfc db, int wallElementIndex, IfcObjectPlacement placement, IfcProductRepresentation rep) : base(db)
+		{
+            Placement = placement;
+            Representation = rep;
+
+			IfcRelVoidsElement rve = new IfcRelVoidsElement(db, wallElementIndex, this);
+		}
+
 	
 		internal static IfcOpeningElement Parse(string strDef, ReleaseVersion schema) { IfcOpeningElement e = new IfcOpeningElement(); int ipos = 0; parseFields(e, ParserSTEP.SplitLineFields(strDef), ref ipos); return e; }
 		internal static void parseFields(IfcOpeningElement e, List<string> arrFields, ref int ipos, ReleaseVersion schema)
