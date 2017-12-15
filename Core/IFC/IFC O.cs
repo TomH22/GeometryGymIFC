@@ -494,7 +494,7 @@ namespace GeometryGym.Ifc
 		}
 
         /// <remarks>
-        /// don't use, just for special case
+        /// Creates an opening elements with a fixed index.
         /// </remarks>
 		public IfcOpeningElement(DatabaseIfc db, int wallElementIndex, IfcObjectPlacement placement, IfcProductRepresentation rep) : base(db)
 		{

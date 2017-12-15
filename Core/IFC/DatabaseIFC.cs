@@ -830,7 +830,7 @@ namespace GeometryGym.Ifc
 
 		}
 		internal Dictionary<IfcChangeActionEnum, IfcOwnerHistory> mOwnerHistories = new Dictionary<IfcChangeActionEnum, IfcOwnerHistory>();
-		internal IfcOwnerHistory OwnerHistory(IfcChangeActionEnum changeAction)
+		public IfcOwnerHistory OwnerHistory(IfcChangeActionEnum changeAction)
 		{
 			if (mOwnerHistories.ContainsKey(changeAction))
 				return mOwnerHistories[changeAction];

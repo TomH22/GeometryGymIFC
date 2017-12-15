@@ -756,7 +756,8 @@ namespace GeometryGym.Ifc
         }
 
         /// <remarks>
-        /// don't use, just for special case
+        /// Cretes IfcDoor without wall.
+        /// Just with Opening-Element overhead.
         /// </remarks>
         public IfcDoor(DatabaseIfc db, int openingElementIndex, IfcObjectPlacement placement, IfcProductRepresentation representation) :
             base(db)

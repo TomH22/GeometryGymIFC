@@ -457,7 +457,7 @@ namespace GeometryGym.Ifc
 		}
 
         /// <remarks>
-        /// don't use, just for special case
+        /// Creates a relating elements with a fixed index.
         /// </remarks>
         public IfcLocalPlacement(int relativeToIndex, IfcAxis2Placement placement)
             : this(placement)

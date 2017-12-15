@@ -1594,7 +1594,7 @@ namespace GeometryGym.Ifc
 		internal IfcRelFillsElement(DatabaseIfc db, IfcRelFillsElement r) : base(db,r) { RelatingOpeningElement = db.Factory.Duplicate(r) as IfcOpeningElement; RelatedBuildingElement = db.Factory.Duplicate(r.RelatedBuildingElement) as IfcElement; }
 		internal IfcRelFillsElement(IfcOpeningElement oe, IfcElement e) : base(oe.mDatabase) { mRelatingOpeningElement = oe.mIndex; mRelatedBuildingElement = e.mIndex; }
         /// <remarks>
-        /// don't use, just for special case
+        /// Set relating elements via fixed indexes.
         /// </remarks>
         internal IfcRelFillsElement(DatabaseIfc db,int oeIndex, IfcElement e) : base(db) {
             mRelatingOpeningElement = oeIndex; 
@@ -2173,7 +2173,7 @@ namespace GeometryGym.Ifc
 			: base(host.mDatabase) { mRelatingBuildingElement = host.mIndex; host.mHasOpenings.Add(this); mRelatedOpeningElement = fes.mIndex; fes.mVoidsElement = this; }
 
         /// <remarks>
-        /// don't use, just for special case
+        /// Set relating elements via fixed indexes.
         /// </remarks>
 		public IfcRelVoidsElement(DatabaseIfc db, int weIndex, IfcElement e)
 			: base(db) { 

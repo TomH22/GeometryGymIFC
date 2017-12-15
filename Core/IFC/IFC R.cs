@@ -1354,7 +1354,7 @@ namespace GeometryGym.Ifc
 		}
 
         /// <remarks>
-        /// don't use, just for special case
+        /// Set mOwnerHistory with fixed value.
         /// </remarks>
         public void SetOwnerHistoryIndex(int index)
         {
