@@ -1352,7 +1352,16 @@ namespace GeometryGym.Ifc
 			get { return mDatabase[mOwnerHistory] as IfcOwnerHistory; }
 			set { mOwnerHistory = (value == null ? 0 : value.mIndex); }
 		}
-		public override string Name
+
+        /// <remarks>
+        /// Set mOwnerHistory with fixed value.
+        /// </remarks>
+        public void SetOwnerHistoryIndex(int index)
+        {
+            mOwnerHistory = index;
+        }
+
+        public override string Name
 		{
 			get { return (mName == "$" ? "" : ParserIfc.Decode(mName)); }
 			set { mName = (string.IsNullOrEmpty(value) ? "$" : ParserIfc.Encode(value)); }

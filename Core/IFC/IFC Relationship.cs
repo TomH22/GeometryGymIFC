@@ -1592,7 +1592,16 @@ namespace GeometryGym.Ifc
 		internal IfcRelFillsElement() : base() { }
 		internal IfcRelFillsElement(DatabaseIfc db, IfcRelFillsElement r) : base(db,r) { RelatingOpeningElement = db.Factory.Duplicate(r) as IfcOpeningElement; RelatedBuildingElement = db.Factory.Duplicate(r.RelatedBuildingElement) as IfcElement; }
 		internal IfcRelFillsElement(IfcOpeningElement oe, IfcElement e) : base(oe.mDatabase) { mRelatingOpeningElement = oe.mIndex; mRelatedBuildingElement = e.mIndex; }
-		internal static IfcRelFillsElement Parse(string strDef) { IfcRelFillsElement i = new IfcRelFillsElement(); int ipos = 0; parseFields(i, ParserSTEP.SplitLineFields(strDef), ref ipos); return i; }
+        /// <remarks>
+        /// Set relating elements via fixed indexes.
+        /// </remarks>
+        internal IfcRelFillsElement(DatabaseIfc db, int oeIndex, IfcElement e) : base(db)
+        {
+            mRelatingOpeningElement = oeIndex;
+            mRelatedBuildingElement = e.mIndex;
+        }
+
+        internal static IfcRelFillsElement Parse(string strDef) { IfcRelFillsElement i = new IfcRelFillsElement(); int ipos = 0; parseFields(i, ParserSTEP.SplitLineFields(strDef), ref ipos); return i; }
 		internal static void parseFields(IfcRelFillsElement i, List<string> arrFields, ref int ipos) { IfcRelConnects.parseFields(i, arrFields, ref ipos); i.mRelatingOpeningElement = ParserSTEP.ParseLink(arrFields[ipos++]); i.mRelatedBuildingElement = ParserSTEP.ParseLink(arrFields[ipos++]); }
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + "," + ParserSTEP.LinkToString(mRelatingOpeningElement) + "," + ParserSTEP.LinkToString(mRelatedBuildingElement); }
 		internal override void postParseRelate()
@@ -2162,7 +2171,18 @@ namespace GeometryGym.Ifc
 		internal IfcRelVoidsElement(DatabaseIfc db, IfcRelVoidsElement v) : base(db, v) { RelatedOpeningElement = db.Factory.Duplicate(v.RelatedOpeningElement) as IfcFeatureElementSubtraction; }
 		public IfcRelVoidsElement(IfcElement host, IfcFeatureElementSubtraction fes)
 			: base(host.mDatabase) { mRelatingBuildingElement = host.mIndex; host.mHasOpenings.Add(this); mRelatedOpeningElement = fes.mIndex; fes.mVoidsElement = this; }
-		internal static IfcRelVoidsElement Parse(string strDef) { IfcRelVoidsElement i = new IfcRelVoidsElement(); int ipos = 0; parseFields(i, ParserSTEP.SplitLineFields(strDef), ref ipos); return i; }
+
+        /// <remarks>
+        /// Set relating elements via fixed indexes.
+        /// </remarks>
+		public IfcRelVoidsElement(DatabaseIfc db, int weIndex, IfcElement e)
+            : base(db)
+        {
+            mRelatingBuildingElement = weIndex;
+            mRelatedOpeningElement = e.mIndex;
+        }
+
+        internal static IfcRelVoidsElement Parse(string strDef) { IfcRelVoidsElement i = new IfcRelVoidsElement(); int ipos = 0; parseFields(i, ParserSTEP.SplitLineFields(strDef), ref ipos); return i; }
 		internal static void parseFields(IfcRelVoidsElement i, List<string> arrFields, ref int ipos) { IfcRelConnects.parseFields(i, arrFields, ref ipos); i.mRelatingBuildingElement = ParserSTEP.ParseLink(arrFields[ipos++]); i.mRelatedOpeningElement = ParserSTEP.ParseLink(arrFields[ipos++]); }
 		protected override string BuildStringSTEP() { return base.BuildStringSTEP() + "," + ParserSTEP.LinkToString(mRelatingBuildingElement) + "," + ParserSTEP.LinkToString(mRelatedOpeningElement); }
 		internal override void postParseRelate()

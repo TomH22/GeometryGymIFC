@@ -732,57 +732,72 @@ namespace GeometryGym.Ifc
 		ReadOnlyCollection<IfcRelAssociatesDocument> Associates { get; }
 		void Associate(IfcRelAssociatesDocument associates);
 	}
-	public partial class IfcDoor : IfcBuildingElement
-	{
-		internal double mOverallHeight = double.NaN;// : OPTIONAL IfcPositiveLengthMeasure;
-		internal double mOverallWidth = double.NaN;// : OPTIONAL IfcPositiveLengthMeasure;
-		internal IfcDoorTypeEnum mPredefinedType = IfcDoorTypeEnum.NOTDEFINED;//: OPTIONAL IfcDoorTypeEnum; //IFC4 
-		internal IfcDoorTypeOperationEnum mOperationType = IfcDoorTypeOperationEnum.NOTDEFINED;// : OPTIONAL IfcDoorTypeOperationEnum; //IFC4
-		internal string mUserDefinedOperationType = "$";//	 :	OPTIONAL IfcLabel;
+    public partial class IfcDoor : IfcBuildingElement
+    {
+        internal double mOverallHeight = double.NaN;// : OPTIONAL IfcPositiveLengthMeasure;
+        internal double mOverallWidth = double.NaN;// : OPTIONAL IfcPositiveLengthMeasure;
+        internal IfcDoorTypeEnum mPredefinedType = IfcDoorTypeEnum.NOTDEFINED;//: OPTIONAL IfcDoorTypeEnum; //IFC4 
+        internal IfcDoorTypeOperationEnum mOperationType = IfcDoorTypeOperationEnum.NOTDEFINED;// : OPTIONAL IfcDoorTypeOperationEnum; //IFC4
+        internal string mUserDefinedOperationType = "$";//	 :	OPTIONAL IfcLabel;
 
-		public double OverallHeight { get { return mOverallHeight; } set { mOverallHeight = (value > 0 ? value : double.NaN); } }
-		public double OverallWidth { get { return mOverallWidth; } set { mOverallWidth = (value > 0 ? value : double.NaN); } }
-		public IfcDoorTypeEnum PredefinedType { get { return mPredefinedType; } set { mPredefinedType = value; } }
-		public IfcDoorTypeOperationEnum OperationType { get { return mOperationType; } set { mOperationType = value; } }
-		public string UserDefinedOperationType { get { return (mUserDefinedOperationType == "$" ? "" : ParserIfc.Decode(mUserDefinedOperationType)); } set { mUserDefinedOperationType = (string.IsNullOrEmpty(value) ? "$" : ParserIfc.Encode(value)); } }
+        public double OverallHeight { get { return mOverallHeight; } set { mOverallHeight = (value > 0 ? value : double.NaN); } }
+        public double OverallWidth { get { return mOverallWidth; } set { mOverallWidth = (value > 0 ? value : double.NaN); } }
+        public IfcDoorTypeEnum PredefinedType { get { return mPredefinedType; } set { mPredefinedType = value; } }
+        public IfcDoorTypeOperationEnum OperationType { get { return mOperationType; } set { mOperationType = value; } }
+        public string UserDefinedOperationType { get { return (mUserDefinedOperationType == "$" ? "" : ParserIfc.Decode(mUserDefinedOperationType)); } set { mUserDefinedOperationType = (string.IsNullOrEmpty(value) ? "$" : ParserIfc.Encode(value)); } }
 
-		internal IfcDoor() : base() { }
-		internal IfcDoor(DatabaseIfc db, IfcDoor d, bool downStream) : base(db, d, downStream) { mOverallHeight = d.mOverallHeight; mOverallWidth = d.mOverallWidth; mPredefinedType = d.mPredefinedType; mOperationType = d.mOperationType; mUserDefinedOperationType = d.mUserDefinedOperationType; }
-		public IfcDoor(IfcObjectDefinition host, IfcObjectPlacement placement, IfcProductRepresentation representation) : base(host, placement, representation) { }
+        internal IfcDoor() : base() { }
+        internal IfcDoor(DatabaseIfc db, IfcDoor d, bool downStream) : base(db, d, downStream) { mOverallHeight = d.mOverallHeight; mOverallWidth = d.mOverallWidth; mPredefinedType = d.mPredefinedType; mOperationType = d.mOperationType; mUserDefinedOperationType = d.mUserDefinedOperationType; }
+        public IfcDoor(IfcObjectDefinition host, IfcObjectPlacement placement, IfcProductRepresentation representation) : base(host, placement, representation) { }
         public IfcDoor(IfcObjectDefinition host, IfcOpeningElement openingElement, IfcObjectPlacement placement, IfcProductRepresentation representation) :
             this(host, placement, representation)
         {
             IfcRelFillsElement relFillsElement = new IfcRelFillsElement(openingElement, this);
         }
+
+        /// <remarks>
+        /// Cretes IfcDoor without wall.
+        /// Just with Opening-Element overhead.
+        /// </remarks>
+        public IfcDoor(DatabaseIfc db, int openingElementIndex, IfcObjectPlacement placement, IfcProductRepresentation representation) :
+            base(db)
+        {
+            Placement = placement;
+            Representation = representation;
+
+            IfcRelFillsElement relFillsElement = new IfcRelFillsElement(db, openingElementIndex, this);
+        }
+
         internal static IfcDoor Parse(string str, ReleaseVersion schema) { IfcDoor d = new IfcDoor(); int pos = 0; d.Parse(str, ref pos, str.Length, schema); return d; }
-		
-		protected void Parse(string str, ref int pos, int len, ReleaseVersion schema)
-		{
-			base.Parse(str, ref pos, len);
-			mOverallHeight = ParserSTEP.StripDouble(str, ref pos, len);
-			mOverallWidth = ParserSTEP.StripDouble(str, ref pos, len);
-			if (schema != ReleaseVersion.IFC2x3)
-			{
-				string s = ParserSTEP.StripField(str, ref pos, len);
-				if (s[0] == '.')
-					PredefinedType = (IfcDoorTypeEnum)Enum.Parse(typeof(IfcDoorTypeEnum), s.Substring(1, s.Length - 2));
-				s = ParserSTEP.StripField(str, ref pos, len);
-				if (s[0] == '.')
-					mOperationType = (IfcDoorTypeOperationEnum)Enum.Parse(typeof(IfcDoorTypeOperationEnum), s.Substring(1, s.Length - 2));
-				try
-				{
-					mUserDefinedOperationType = ParserSTEP.StripString(str,ref pos, len);
-				}
-				catch (Exception) { }
-			}
-		}
-		protected override string BuildStringSTEP()
-		{
-			return base.BuildStringSTEP() + "," + ParserSTEP.DoubleOptionalToString(mOverallHeight) + "," + ParserSTEP.DoubleOptionalToString(mOverallWidth)
-				+ (mDatabase.mRelease == ReleaseVersion.IFC2x3 ? "" : ",." + mPredefinedType.ToString() + ".,." + mOperationType.ToString() + (mUserDefinedOperationType == "$" ? ".,$" : ".,'" + mUserDefinedOperationType + "'"));
-		}
-	}
-	public partial class IfcDoorLiningProperties : IfcPreDefinedPropertySet // IFC2x3 IfcPropertySetDefinition
+
+        protected void Parse(string str, ref int pos, int len, ReleaseVersion schema)
+        {
+            base.Parse(str, ref pos, len);
+            mOverallHeight = ParserSTEP.StripDouble(str, ref pos, len);
+            mOverallWidth = ParserSTEP.StripDouble(str, ref pos, len);
+            if (schema != ReleaseVersion.IFC2x3)
+            {
+                string s = ParserSTEP.StripField(str, ref pos, len);
+                if (s[0] == '.')
+                    PredefinedType = (IfcDoorTypeEnum)Enum.Parse(typeof(IfcDoorTypeEnum), s.Substring(1, s.Length - 2));
+                s = ParserSTEP.StripField(str, ref pos, len);
+                if (s[0] == '.')
+                    mOperationType = (IfcDoorTypeOperationEnum)Enum.Parse(typeof(IfcDoorTypeOperationEnum), s.Substring(1, s.Length - 2));
+                try
+                {
+                    mUserDefinedOperationType = ParserSTEP.StripString(str, ref pos, len);
+                }
+                catch (Exception) { }
+            }
+        }
+        protected override string BuildStringSTEP()
+        {
+            return base.BuildStringSTEP() + "," +
+                ParserSTEP.DoubleOptionalToString(mOverallHeight) + "," + ParserSTEP.DoubleOptionalToString(mOverallWidth)
+                + (mDatabase.mRelease == ReleaseVersion.IFC2x3 ? "" : ",." + mPredefinedType.ToString() + ".,." + mOperationType.ToString() + (mUserDefinedOperationType == "$" ? ".,$" : ".,'" + mUserDefinedOperationType + "'"));
+        }
+    }
+    public partial class IfcDoorLiningProperties : IfcPreDefinedPropertySet // IFC2x3 IfcPropertySetDefinition
 	{
 		internal double mLiningDepth, mLiningThickness, mThresholdDepth, mThresholdThickness, mTransomThickness;// : OPTIONAL IfcPositiveLengthMeasure;
 		internal double mTransomOffset = double.NaN, mLiningOffset = double.NaN, mThresholdOffset = double.NaN;// : OPTIONAL IfcLengthMeasure;

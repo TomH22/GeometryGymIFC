@@ -34,8 +34,14 @@ namespace GeometryGym.STEP
 		internal List<string> mComments = new List<string>();
 		internal string mSTEPString = "";
 
-		public int Index { get { return mIndex; } }
-		public List<string> Comments { get { return mComments; } set { mComments = value; } }
+        public int Index
+        {
+            get{return mIndex;}
+            // don't use, just for special case
+            set{ mIndex = value;}
+        }
+
+        public List<string> Comments { get { return mComments; } set { mComments = value; } }
 
 		protected static  ConcurrentDictionary<string, Type> mTypes = new ConcurrentDictionary<string, Type>();
 		protected static ConcurrentDictionary<string, MethodInfo> mConstructorsSchema = new ConcurrentDictionary<string, MethodInfo>();
